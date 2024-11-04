@@ -3,7 +3,6 @@ using WebAtividadeEntrevista.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using FI.AtividadeEntrevista.DML;
 
@@ -11,6 +10,17 @@ namespace WebAtividadeEntrevista.Controllers
 {
     public class ClienteController : Controller
     {
+        private ClienteModel _clienteModel;
+
+        public ClienteController()
+        {
+            ViewBag.Estados = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "SP", Text = "São Paulo" },
+                new SelectListItem { Value = "PE", Text = "Pernambuco" }
+            };
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -19,15 +29,36 @@ namespace WebAtividadeEntrevista.Controllers
 
         public ActionResult Incluir()
         {
-            return View();
+            var model = new ClienteBeneficiarioModel
+            {
+                Cliente = new ClienteModel(),
+                Beneficiario = new BeneficiarioModel(),
+                Beneficiarios = new List<BeneficiarioModel>
+                {
+                    new BeneficiarioModel()
+                    {
+                        Id = 1,
+                        IdCliente = 1,
+                        CPF = "12345678945",
+                        Nome = "João"
+                    },
+                    new BeneficiarioModel()
+                    {
+                        Id = 2,
+                        IdCliente = 1,
+                        CPF = "12345678945",
+                        Nome = "Maria"
+                    }
+                }
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         public JsonResult Incluir(ClienteModel model)
         {
-            BoCliente bo = new BoCliente();
-            
-            if (!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 List<string> erros = (from item in ModelState.Values
                                       from error in item.Errors
@@ -36,25 +67,36 @@ namespace WebAtividadeEntrevista.Controllers
                 Response.StatusCode = 400;
                 return Json(string.Join(Environment.NewLine, erros));
             }
-            else
-            {
-                
-                model.Id = bo.Incluir(new Cliente()
-                {                    
-                    CEP = model.CEP,
-                    Cidade = model.Cidade,
-                    Email = model.Email,
-                    Estado = model.Estado,
-                    Logradouro = model.Logradouro,
-                    Nacionalidade = model.Nacionalidade,
-                    Nome = model.Nome,
-                    Sobrenome = model.Sobrenome,
-                    Telefone = model.Telefone
-                });
 
-           
-                return Json("Cadastro efetuado com sucesso");
+            var bo = new BoCliente();
+
+            if (bo.VerificarExistencia(model.CPF))
+            {
+                Response.StatusCode = 400;
+                return Json("O CPF informado já está cadastrado.");
             }
+
+            model.Id = bo.Incluir(new Cliente()
+            {                    
+                CEP = model.CEP,
+                Cidade = model.Cidade,
+                CPF = model.CPF,
+                Email = model.Email,
+                Estado = model.Estado,
+                Logradouro = model.Logradouro,
+                Nacionalidade = model.Nacionalidade,
+                Nome = model.Nome,
+                Sobrenome = model.Sobrenome,
+                Telefone = model.Telefone
+            });
+
+            return Json("Cadastro efetuado com sucesso");
+        }
+
+        [HttpPost]
+        public ActionResult ListarBeneficiarios(ClienteBeneficiarioModel model)
+        {
+            return PartialView("_ListaBeneficiarios", model.Beneficiarios);
         }
 
         [HttpPost]
@@ -104,6 +146,7 @@ namespace WebAtividadeEntrevista.Controllers
                 {
                     Id = cliente.Id,
                     CEP = cliente.CEP,
+                    CPF = cliente.CPF,
                     Cidade = cliente.Cidade,
                     Email = cliente.Email,
                     Estado = cliente.Estado,

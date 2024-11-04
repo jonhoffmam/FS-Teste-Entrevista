@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using FI.WebAtividadeEntrevista.Attributes;
 
 namespace WebAtividadeEntrevista.Models
 {
@@ -26,9 +23,17 @@ namespace WebAtividadeEntrevista.Models
         public string Cidade { get; set; }
 
         /// <summary>
+        /// Cpf
+        /// </summary>
+        [Required]
+        [Cpf(ErrorMessage = "Digite um CPF válido.")]
+        public string CPF { get; set; }
+
+        /// <summary>
         /// E-mail
         /// </summary>
-        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Digite um e-mail válido")]
+        [Required]
+        [EmailAddress(ErrorMessage = "Digite um e-mail válido.")]
         public string Email { get; set; }
 
         /// <summary>
@@ -65,7 +70,7 @@ namespace WebAtividadeEntrevista.Models
         /// <summary>
         /// Telefone
         /// </summary>
+        [Required]
         public string Telefone { get; set; }
-
     }    
 }

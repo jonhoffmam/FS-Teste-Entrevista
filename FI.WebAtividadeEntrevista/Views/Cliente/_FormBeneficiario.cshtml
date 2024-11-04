@@ -1,0 +1,23 @@
+﻿@model WebAtividadeEntrevista.Models.BeneficiarioModel
+
+<form id="formBeneficiario">
+    <div class="row" style="display: flex; align-items: center;">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(m => m.CPF)
+                @Html.TextBoxFor(m => m.CPF, new { @class = "form-control", placeholder = "Ex.: 010.011.111-00", data_mask = "CPF" })
+                @Html.ValidationMessageFor(m => m.CPF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", placeholder = "Ex.: Maria" })
+                @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" id="incluirBeneficiario" class="btn btn-success" style="margin-top: 10px">Incluir</button>
+        </div>
+    </div>
+</form>

@@ -1,12 +1,17 @@
-﻿
+﻿@model WebAtividadeEntrevista.Models.ClienteBeneficiarioModel
 @{
     ViewBag.Title = "Cadastrar Cliente";
 }
 @section scripts{
     <script>
+        var clienteBeneficiarioModel = @Html.Raw(Json.Encode(Model));
         var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
+        var urlListarBeneficiarios = '@Url.Action("ListarBeneficiarios", "Cliente")';
     </script>
+    @Scripts.Render("~/bundles/validators")
+    @Scripts.Render("~/bundles/helpers")
     @Scripts.Render("~/bundles/clientes")
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
-@Html.Partial("Forms")
+@{ Html.RenderPartial("Forms", Model.Cliente); }
+@{ Html.RenderPartial("_ModalBeneficiario"); }

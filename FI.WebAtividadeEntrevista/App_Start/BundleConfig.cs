@@ -17,6 +17,9 @@ namespace FI.WebAtividadeEntrevista
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquerymask").Include(
+                "~/Scripts/jquery.inputmask*"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -38,12 +41,20 @@ namespace FI.WebAtividadeEntrevista
             bundles.Add(new ScriptBundle("~/bundles/altClientes").Include(
                       "~/Scripts/Clientes/FI.AltClientes.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/validators")
+                .IncludeDirectory("~/Scripts/utils/validators", "*.js", true));
+            
+            bundles.Add(new ScriptBundle("~/bundles/helpers")
+                .IncludeDirectory("~/Scripts/utils/helpers", "*.js", true));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/jtable").Include(
                       "~/Scripts/jtable/themes/metro/darkgray/jtable.css"));
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

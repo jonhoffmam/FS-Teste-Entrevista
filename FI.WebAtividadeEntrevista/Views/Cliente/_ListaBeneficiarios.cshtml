@@ -1,0 +1,24 @@
+﻿@model IEnumerable<WebAtividadeEntrevista.Models.BeneficiarioModel>
+
+<table class="table" id="beneficiariosTable">
+    <thead>
+        <tr>
+            <th>CPF</th>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody id="beneficiariosTableBody">
+        @foreach (var beneficiario in Model)
+        {
+            <tr>
+                <td data-mask="CPF">@beneficiario.CPF</td>
+                <td>@beneficiario.Nome</td>
+                <td>
+                    <button class="btn btn-primary" data-id="@beneficiario.Id">Alterar</button>
+                    <button class="btn btn-primary" data-id="@beneficiario.Id">Excluir</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
