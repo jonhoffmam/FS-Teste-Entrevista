@@ -12,6 +12,7 @@ namespace FI.WebAtividadeEntrevista
     {
         protected void Application_Start()
         {
+            AutoMapperConfig.RegisterMappings();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

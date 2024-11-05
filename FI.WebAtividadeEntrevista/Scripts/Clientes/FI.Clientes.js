@@ -2,21 +2,22 @@
 $(document).ready(function () {
     $('#formCadastro').submit(function(e) {
         e.preventDefault();
+
+        clienteBeneficiarioModel.Cliente.Nome = $(this).find("#Nome").val();
+        clienteBeneficiarioModel.Cliente.CEP = $(this).find("#CEP").val();
+        clienteBeneficiarioModel.Cliente.CPF = $(this).find("#CPF").val();
+        clienteBeneficiarioModel.Cliente.Email = $(this).find("#Email").val();
+        clienteBeneficiarioModel.Cliente.Sobrenome = $(this).find("#Sobrenome").val();
+        clienteBeneficiarioModel.Cliente.Nacionalidade = $(this).find("#Nacionalidade").val()
+        clienteBeneficiarioModel.Cliente.Estado = $(this).find("#Estado").val();
+        clienteBeneficiarioModel.Cliente.Cidade = $(this).find("#Cidade").val();
+        clienteBeneficiarioModel.Cliente.Logradouro = $(this).find("#Logradouro").val();
+        clienteBeneficiarioModel.Cliente.Telefone = $(this).find("#Telefone").val();
+
         $.ajax({
             url: urlPost,
             method: "POST",
-            data: {
-                "Nome": $(this).find("#Nome").val(),
-                "CEP": $(this).find("#CEP").val(),
-                "CPF": $(this).find("#CPF").val(),
-                "Email": $(this).find("#Email").val(),
-                "Sobrenome": $(this).find("#Sobrenome").val(),
-                "Nacionalidade": $(this).find("#Nacionalidade").val(),
-                "Estado": $(this).find("#Estado").val(),
-                "Cidade": $(this).find("#Cidade").val(),
-                "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()
-            },
+            data: clienteBeneficiarioModel,
             error:
                 function(r) {
                     if (r.status == 400)
